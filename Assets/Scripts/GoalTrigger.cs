@@ -2,7 +2,10 @@ using UnityEngine;
 
 public class GoalTrigger : MonoBehaviour
 {
+    public ScoreManager scoreManager;
     public Transform ballSpawnPoint;
+
+    public bool isHomeGoal;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -18,10 +21,16 @@ public class GoalTrigger : MonoBehaviour
     
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Ball"))
+        if (other.CompareTag("Ball") && scoreManager != null)
         {
+            if(isHomeGoal)
+                scoreManager.AddHomePoint();
+            else
+            scoreManager.AddAwayPoint();
+            
             Debug.Log("Goal!!!!!!!!!");
             ResetBall(other.gameObject);
+            
         }                       
     }
 
